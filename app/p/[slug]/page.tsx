@@ -7,11 +7,11 @@ export default function LifePage() {
   const years = Array.from({ length: 20 }, (_, i) => 2026 - i);
 
   return (
-    // 1. 強制滿屏且禁止垂直溢出
-    <div className="fixed inset-0 h-screen w-screen overflow-hidden bg-[#FDFBF7] flex flex-col text-[#333]">
+    // 1. 最外層：鎖死螢幕，禁止上下晃動
+    <div className="fixed inset-0 h-full w-full overflow-hidden bg-[#FDFBF7] flex flex-col text-[#333]">
       
       {/* 頂部導覽列 */}
-      <nav className="h-14 flex-shrink-0 border-b flex items-center justify-between px-6 bg-white/90 backdrop-blur-sm z-50">
+      <nav className="h-14 flex-shrink-0 border-b flex items-center justify-between px-6 bg-white z-50">
         <button onClick={() => setIsVertical(!isVertical)} className="text-[10px] border border-black px-2 py-1 rounded-sm font-bold">
           {isVertical ? "切換橫式" : "切換直式"}
         </button>
@@ -19,43 +19,44 @@ export default function LifePage() {
         <div className="flex gap-4 text-gray-300"><Music size={18} /><Shield size={18} /></div>
       </nav>
 
-      {/* 2. 核心滑動區：強制橫向，禁止縱向 */}
-      <main className="flex-1 overflow-x-auto overflow-y-hidden touch-pan-x" dir={isVertical ? "rtl" : "ltr"}>
-        {/* 內層容器：h-full 確保高度不超過螢幕，flex-row 確保內容排成一橫列 */}
-        <div className="h-full inline-flex flex-row flex-nowrap items-stretch">
+      {/* 2. 主滑動區：這是「軌道」 */}
+      <main className="flex-1 overflow-x-auto overflow-y-hidden select-none outline-none">
+        
+        {/* 內層容器：這是「整列火車」。min-w-max 確保它會被車廂撐開，不准縮小 */}
+        <div className="h-full flex flex-row flex-nowrap w-max min-w-full">
           
-          {/* 第一章 */}
-          <section className="h-full w-[85vw] md:w-[500px] flex-shrink-0 p-8 flex flex-col justify-start">
-            <div className={`h-full ${isVertical ? "vertical-writing" : ""}`} dir="ltr">
+          {/* 第一節車廂 */}
+          <section className="h-full w-[85vw] md:w-[450px] flex-shrink-0 border-r border-gray-100 flex flex-col">
+            <div className={`p-8 flex-1 ${isVertical ? "vertical-writing" : ""}`}>
               <h2 className="text-4xl font-black mb-8 border-b-2 border-amber-900/10 pb-4">二〇二六．春分</h2>
               <p className="text-xl leading-[2.6]">
-                我們把直排限制在「區塊內」，這樣區塊與區塊之間就會乖乖左右排列了。
-                測試：iPhone SE2 現在應該可以左右滑動。
+                現在我們強制設定了「車廂寬度」。
+                如果在電腦上，請按住 Shift 滾動滾輪，或者直接用滑鼠拖動捲軸。
+                在 iPhone SE2 上，請直接左滑。
               </p>
-              <div className="mt-6 shadow-xl border-[10px] border-white rotate-1 overflow-hidden">
+              <div className="mt-6 shadow-xl border-[10px] border-white rotate-1">
                 <img src="https://picsum.photos/600/500?t=1" className="w-full h-auto object-cover" alt="Memory" />
               </div>
             </div>
           </section>
 
-          {/* 第二章 */}
-          <section className="h-full w-[85vw] md:w-[500px] flex-shrink-0 p-8 flex flex-col justify-start border-l border-gray-100">
-            <div className={`h-full ${isVertical ? "vertical-writing" : ""}`} dir="ltr">
+          {/* 第二節車廂 */}
+          <section className="h-full w-[85vw] md:w-[450px] flex-shrink-0 border-r border-gray-100 flex flex-col bg-white/30">
+            <div className={`p-8 flex-1 ${isVertical ? "vertical-writing" : ""}`}>
               <h2 className="text-4xl font-black mb-8 border-b-2 border-amber-900/10 pb-4">記憶之城</h2>
               <p className="text-xl leading-[2.6]">
-                這是第二章。它現在應該出現在第一章的「左邊」。
-                這才是我們要的「卷軸感」。
-                當你滑到這裡，代表佈署成功！
+                如果你能在右邊看到這一章，代表「火車佈局」成功了！
+                我們會確保每一章都至少佔據 85% 的螢幕寬度。
               </p>
-              <div className="mt-6 shadow-xl border-[10px] border-white -rotate-1 overflow-hidden">
+              <div className="mt-6 shadow-xl border-[10px] border-white -rotate-1">
                 <img src="https://picsum.photos/600/500?t=2" className="w-full h-auto object-cover" alt="Memory" />
               </div>
             </div>
           </section>
 
-          {/* 第三章 (佔位符) */}
-          <section className="h-full w-[85vw] md:w-[500px] flex-shrink-0 p-8 opacity-20">
-            <div className={`h-full ${isVertical ? "vertical-writing" : ""}`} dir="ltr">
+          {/* 第三節車廂 */}
+          <section className="h-full w-[85vw] md:w-[450px] flex-shrink-0 p-8 opacity-20">
+            <div className={`h-full ${isVertical ? "vertical-writing" : ""}`}>
               <h2 className="text-4xl font-black">未完待續</h2>
             </div>
           </section>
@@ -63,7 +64,7 @@ export default function LifePage() {
         </div>
       </main>
 
-      {/* 3. 底部飛梭 */}
+      {/* 3. 底部年份飛梭 */}
       <footer className="h-16 flex-shrink-0 border-t bg-white flex items-center overflow-x-auto px-10 gap-10 no-scrollbar">
         {years.map(y => (
           <div key={y} className="flex-shrink-0 flex flex-col items-center opacity-20">
@@ -80,8 +81,11 @@ export default function LifePage() {
           font-family: "Noto Serif TC", serif;
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        /* 防止 iOS 橡皮條效應在垂直方向觸發 */
-        body { position: fixed; width: 100%; height: 100%; }
+        /* 讓滑動感更像原生 App */
+        main {
+          -webkit-overflow-scrolling: touch;
+          scroll-behavior: smooth;
+        }
       `}</style>
     </div>
   );
