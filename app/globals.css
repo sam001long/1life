@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #FDFBF7;
+  --ink: #333333;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  overflow: hidden; /* 防止全頁上下捲，改用左右捲 */
+}
+
+/* 核心直排引擎 */
+.vertical-writing {
+  writing-mode: vertical-rl;
+  text-orientation: mixed; /* 英文數字轉90度 */
+  font-family: "Noto Serif TC", serif;
+  line-height: 2.5;
+  letter-spacing: 0.1em;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
