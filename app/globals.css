@@ -2,24 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg: #FDFBF7;
-  --ink: #333333;
+/* 徹底解放捲軸 */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible !important; 
 }
-
-body {
-  background: var(--bg);
-  color: var(--ink);
-  overflow: hidden; /* 防止全頁上下捲，改用左右捲 */
-}
-
-/* 核心直排引擎 */
-.vertical-writing {
-  writing-mode: vertical-rl;
-  text-orientation: mixed; /* 英文數字轉90度 */
-  font-family: "Noto Serif TC", serif;
-  line-height: 2.5;
-  letter-spacing: 0.1em;
-}
-
-.no-scrollbar::-webkit-scrollbar { display: none; }
