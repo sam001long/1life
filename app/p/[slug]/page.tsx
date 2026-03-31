@@ -1,86 +1,56 @@
 "use client";
-import React, { useState } from "react";
-import { Music, Shield, Trash2 } from "lucide-react";
+import React from "react";
 
-export default function LifePage() {
-  const [isVertical, setIsVertical] = useState(true);
-
+export default function DebugPage() {
   return (
-    <div className="fixed inset-0 flex flex-col bg-[#FDFBF7] text-[#333]">
-      {/* 1. 頂部導覽 (固定高度) */}
-      <nav className="h-14 border-b flex items-center justify-between px-6 bg-white/90 backdrop-blur-sm z-50 flex-shrink-0">
-        <button onClick={() => setIsVertical(!isVertical)} className="text-[10px] border border-black px-2 py-1 rounded-sm font-bold">
-          {isVertical ? "切換橫式" : "切換直式"}
-        </button>
-        <h1 className="font-serif font-black tracking-tighter text-xl text-amber-900">1life</h1>
-        <div className="flex gap-4 text-gray-300"><Music size={18} /><Shield size={18} /></div>
-      </nav>
+    <div className="w-screen h-screen bg-[#FDFBF7] overflow-hidden flex flex-col">
+      
+      {/* 頂部 */}
+      <div className="h-16 border-b flex items-center px-6 bg-white shrink-0">
+        <h1 className="font-bold text-xl">1life 測試中</h1>
+      </div>
 
-      {/* 2. 主內容區：暴力橫向捲軸層 */}
-      <main className="flex-1 overflow-x-scroll overflow-y-hidden whitespace-nowrap scroll-smooth h-full">
-        {/* 使用 inline-block 讓每個 section 像單字一樣橫向排列，絕不換行 */}
-        <div className={`h-full p-6 ${isVertical ? "vertical-writing" : "inline-block w-full whitespace-normal"}`}>
+      {/* 捲軸主體：我們強制給它一個超大的寬度 3000px */}
+      <div className="flex-1 overflow-x-scroll overflow-y-hidden bg-gray-100">
+        
+        <div style={{ width: '3000px', height: '100%', display: 'flex' }}>
           
-          {/* 第一章 */}
-          <div className="inline-block h-full w-[90vw] md:w-[500px] align-top px-4 whitespace-normal">
-            <div className="h-full border-r border-amber-900/5 pr-10">
-              <h2 className="text-4xl font-black mb-8 border-b-2 border-amber-900/10 pb-4">二〇二六．春</h2>
-              <p className="text-xl leading-[2.8]">
-                如果這次還不能滑動，代表是父層容器鎖死了寬度。
-                我們用了最原始的 white-space: nowrap。
-                現在內容會強制橫向排開。
-                測試文字：iPhone SE2 與電腦同步測試。
-                時間：2026-03-31 16:00.
-              </p>
-              <div className="mt-6 shadow-2xl border-[10px] border-white rotate-1 max-w-full">
-                <img src="https://picsum.photos/600/400?t=1" className="w-full h-auto block" alt="Memory" />
-              </div>
-            </div>
+          {/* 第一區塊 */}
+          <div className="w-[100vw] h-full bg-white border-r-4 border-amber-900 p-10 shrink-0" 
+               style={{ writingMode: 'vertical-rl' }}>
+            <h2 className="text-5xl font-black mb-10">第一章：起點</h2>
+            <p className="text-2xl leading-relaxed">
+              如果你在電腦上看到這行字，請用滑鼠「橫向捲動」。
+              如果在 iPhone SE2，請「從右往左」用力滑。
+              我們現在強制把寬度設為 3000 像素。
+            </p>
           </div>
 
-          {/* 第二章 */}
-          <div className="inline-block h-full w-[90vw] md:w-[500px] align-top px-4 whitespace-normal">
-            <div className="h-full border-r border-amber-900/5 pr-10">
-              <h2 className="text-4xl font-black mb-8 border-b-2 border-amber-900/10 pb-4">向左撥動</h2>
-              <p className="text-xl leading-[2.8]">
-                這一段應該在螢幕外面。
-                在電腦上，你應該會看到下方的捲軸（Scrollbar）。
-                在手機上，請用力往左推。
-                直排的美，就在於這種無窮無盡的卷軸感。
-              </p>
-              <div className="mt-6 shadow-2xl border-[10px] border-white -rotate-1 max-w-full">
-                <img src="https://picsum.photos/600/400?t=2" className="w-full h-auto block" alt="Memory" />
-              </div>
-            </div>
+          {/* 第二區塊 */}
+          <div className="w-[100vw] h-full bg-amber-50 border-r-4 border-amber-900 p-10 shrink-0"
+               style={{ writingMode: 'vertical-rl' }}>
+            <h2 className="text-5xl font-black mb-10">第二章：滑動成功</h2>
+            <p className="text-2xl leading-relaxed">
+              如果你能看到這段米黃色的背景，代表滑動終於成功了！
+              這是物理級的撐開，沒有任何縮放邏輯。
+            </p>
           </div>
 
-          {/* 第三章 */}
-          <div className="inline-block h-full w-[90vw] md:w-[500px] align-top px-4 whitespace-normal opacity-20">
-            <h2 className="text-4xl font-black mb-8">未完待續</h2>
-            <p className="text-xl leading-[2.8]">這裡是卷軸的終點。</p>
+          {/* 第三區塊 */}
+          <div className="w-[100vw] h-full bg-white p-10 shrink-0"
+               style={{ writingMode: 'vertical-rl' }}>
+            <h2 className="text-5xl font-black mb-10">第三章：極限測試</h2>
+            <p className="text-2xl leading-relaxed">這是 3000 像素的末端。</p>
           </div>
+
         </div>
-      </main>
+      </div>
 
-      <style jsx global>{`
-        .vertical-writing {
-          writing-mode: vertical-rl;
-          text-orientation: mixed;
-          font-family: "Noto Serif TC", serif;
-          display: inline-block;
-          height: 100%;
-        }
-        /* 強制顯示電腦版捲軸，方便除錯 */
-        main::-webkit-scrollbar {
-          height: 4px;
-        }
-        main::-webkit-scrollbar-thumb {
-          background: #d1d5db;
-          border-radius: 10px;
-        }
-        /* 針對 iOS 的手感 */
-        main { -webkit-overflow-scrolling: touch; }
-      `}</style>
+      {/* 底部 */}
+      <div className="h-10 bg-amber-900 text-white text-[10px] flex items-center justify-center shrink-0">
+        1LIFE DEBUG MODE
+      </div>
+
     </div>
   );
 }
